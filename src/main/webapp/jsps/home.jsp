@@ -9,7 +9,7 @@
 </head>
 </head>
 <body>
-<h1 align="center">Welcome to sathya DevOps</h1>
+<h1 align="center">Welcome to scripted pipeline</h1>
 <h1 align="center"> KK FUNDA</h1>
 <hr>
 <br>
