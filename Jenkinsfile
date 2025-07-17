@@ -46,16 +46,39 @@ pipeline {
         }
     }
     
-    post {
-        always {
-            // Clean workspace after build
-            cleanWs()
-        }
+        post {
         success {
-            echo 'Pipeline completed successfully!'
+            script {
+                notifyBuild(currentBuild.result)
+            }
         }
+
         failure {
-            echo 'Pipeline failed!'
+            script {
+                notifyBuild(currentBuild.result)
+            }
         }
     }
+}
+
+// Notification method
+def notifyBuild(String buildStatus = 'STARTED') {
+    buildStatus = buildStatus ?: 'SUCCESS'
+
+    def colorCode
+    def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+    def summary = "${subject} (${env.BUILD_URL})"
+
+    switch (buildStatus) {
+        case 'STARTED':
+            colorCode = '#FFFF00' // Yellow
+            break
+        case 'SUCCESS':
+            colorCode = '#00FF00' // Green
+            break
+        default:
+            colorCode = '#FF0000' // Red
+    }
+
+    slackSend(color: colorCode, message: summary)
 }
