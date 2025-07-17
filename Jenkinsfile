@@ -20,7 +20,7 @@ triggers {
          steps{
             sh "mvn clean package"
          }
-      }
+      
       stage('SQ Report')
       {
          steps{
