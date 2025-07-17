@@ -15,5 +15,23 @@ pipeline {
             sh "mvn clean package"
          }
       }
+      stage('SQ Report')
+      {
+         steps{
+            sh "mvn sonar:sonar"
+         }
+      }
+      stage ('backup artifactory to Nexus')
+      {
+         steps{
+            sh "mvn clean install"
+         }
+      }
+      stage ('deploy to Tomcat ')
+      {
+         steps {
+            sh "mvn clean deploy"
+         }
+      }
       } // stages end 
    } // pipeline end 
