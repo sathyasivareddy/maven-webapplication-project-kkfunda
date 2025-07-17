@@ -8,7 +8,7 @@ parameters {
         gitParameter(
             name: 'TARGET_BRANCH',
             type: 'PT_BRANCH',
-            branchFilter: 'origin/(.*)', // Filter all remote branches
+            branchFilter: '/(.*)', // Filter all remote branches
             defaultValue: 'development',        // Default branch
             description: 'development branch to build',
             sortMode: 'DESCENDING',      // Sort branches by recently updated
