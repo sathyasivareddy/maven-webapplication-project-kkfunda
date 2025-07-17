@@ -5,7 +5,8 @@ pipeline {
       maven "maven-3.9.9"
    }
 triggers {
-   pollSCM('* * * * *')
+   //pollSCM('* * * * *')
+   githubPush()
 }
       
    stages{
