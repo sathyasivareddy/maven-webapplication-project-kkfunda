@@ -10,6 +10,10 @@ pipeline {
          steps{
             echo 'sathya 2 '
          }
+         stage('stage 3') {
+         steps{
+            echo 'sathya 3'
+         }
       }
    }
 }
