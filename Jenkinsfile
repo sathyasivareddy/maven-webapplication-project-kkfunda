@@ -8,7 +8,7 @@ parameters {
         gitParameter(
             name: 'development',
             type: 'PT_BRANCH',
-           // branchFilter: 'origin/(.*)', // Filter all remote branches
+            branchFilter: 'origin/(.*)', // Filter all remote branches
             defaultValue: 'development',        // Default branch
             description: 'development branch to build',
             sortMode: 'DESCENDING',      // Sort branches by recently updated
@@ -19,7 +19,7 @@ parameters {
         choice(
             name: 'BUILD_TYPE',
             choices: ['debug', 'release'],
-            description: 'Select build type'
+            description: 'development branch '
         )
     }
 
@@ -32,8 +32,20 @@ triggers {
       
    stages{
       stage('git checkout') {
-         steps{
-            //git branch: 'development', url: 'https://github.com/sathyasivareddy/maven-webapplication-project-kkfunda/'
+         steps {
+            script {
+               // Clean branch name by removing 'origin/' if present
+               def branchName = params.SELECTED_BRANCH.replace('')
+               
+               checkout([
+                  $class: 'GitSCM',
+                  branches: [[name: branchName]],
+                  userRemoteConfigs: [[
+                     url: 'https://github.com/sathyasivareddy/maven-webapplication-project-kkfunda/',
+                     //credentialsId: 'your-github-credentials' // Add your credentials ID here
+                  ]]
+               ])
+            }
          }
       }
       stage('BUILD') {
