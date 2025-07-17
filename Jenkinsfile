@@ -32,7 +32,7 @@ pipeline {
          steps {
             sh """
     curl -u kk:password \
-    --upload-file /var/lib/jenkins/workspace/jio-scripted-pipeline/target/maven-web-application.war \
+    --upload-file /var/lib/jenkins/workspace/jio-declarative-pipeline/target/maven-web-application.war \
     "http://54.86.40.225:8080/manager/text/deploy?path=/maven-web-applicaton&update=true"
     """
     }
