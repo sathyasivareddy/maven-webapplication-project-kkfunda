@@ -4,49 +4,19 @@ pipeline {
    {
       maven "maven-3.9.9"
    }
-parameters {
-    gitParameter(
-        name: 'SELECTED_BRANCH',
-        type: 'PT_BRANCH',
-        branchFilter: 'origin/(.*)',
-        defaultValue: 'origin/development',
-        description: 'Select branch to build',
-        sortMode: 'DESCENDING',
-        useRepository: 'https://github.com/sathyasivareddy/maven-webapplication-project-kkfunda.git'
-    )
-}
+
    
 triggers {
    //pollSCM('* * * * *')
    githubPush()
 
 }
-      
-   stages{
-      stage('git checkout') {
-    steps {
-        script {
-            // Safely handle branch name with proper cleaning
-            def branchName = params.SELECTED_BRANCH.replaceAll('origin/', '')
-            
-            checkout([
-                $class: 'GitSCM',
-                branches: [[name: branchName]],
-                userRemoteConfigs: [[
-                    url: 'https://github.com/sathyasivareddy/maven-webapplication-project-kkfunda.git',
-                    credentialsId: 'github-credentials'
-                ]],
-                extensions: [
-                    [
-                        $class: 'LocalBranch',
-                        localBranch: branchName
-                    ]
-                ]
-            ])
-        }
-    }
-}
-      stage('BUILD') {
+      stage('git checkout')
+  {
+   
+    git branch: 'development', url: 'https://github.com/sathyasivareddy/maven-webapplication-project-kkfunda/'
+  } 
+     stage('BUILD') {
          steps{
             sh "mvn clean package"
          }
