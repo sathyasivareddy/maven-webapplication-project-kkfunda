@@ -6,7 +6,7 @@ pipeline {
    }
 parameters {
         gitParameter(
-            name: 'development',
+            name: 'TARGET_BRANCH',
             type: 'PT_BRANCH',
             branchFilter: 'origin/(.*)', // Filter all remote branches
             defaultValue: 'development',        // Default branch
@@ -35,7 +35,7 @@ triggers {
          steps {
             script {
                // Clean branch name by removing 'origin/' if present
-               def branchName = params.SELECTED_BRANCH.replace('')
+               def branchName = params.SELECTED_BRANCH.replaceFirst()
                
                checkout([
                   $class: 'GitSCM',
