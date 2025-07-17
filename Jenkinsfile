@@ -1,22 +1,18 @@
 pipeline {
    agent any
-   stages {
-      stage('Build 1') {
-         steps {
-            echo 'Building...'
-            // Add your build commands here
+   stages{
+      stage('git checkout') {
+         steps{
+            git branch: 'development', url: 'https://github.com/sathyasivareddy/maven-webapplication-project-kkfunda/'
          }
       }
-      stage('Test 2 ') {
-         steps {
-            echo 'Testing...'
-            // Add your test commands here
+      stage('COMPILE') {
+         steps{
+           
          }
-      }
-      stage('Deploy 3 ') {
-         steps {
-            echo 'Deploying...'
-            // Add your deployment commands here
+         stage('stage 2') {
+         steps{
+            echo 'sathya 2 '
          }
       }
    }
