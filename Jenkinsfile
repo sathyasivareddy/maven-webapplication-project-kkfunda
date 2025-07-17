@@ -4,10 +4,10 @@ pipeline {
    {
       maven "maven-3.9.9"
    }
-triggers{
-   POLLSCM('* * * * *')
+triggers {
+   pollSCM('* * * * *')
 }
-   
+      
    stages{
       stage('git checkout') {
          steps{
