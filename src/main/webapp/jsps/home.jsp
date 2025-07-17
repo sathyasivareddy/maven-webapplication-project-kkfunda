@@ -9,7 +9,7 @@
 </head>
 </head>
 <body>
-<h1 align="center">Welcome to declerative pipeline with triggers</h1>
+<h1 align="center">Welcome to declerative pipeline with triggers with cron </h1>
 <h1 align="center"> KK FUNDA</h1>
 <hr>
 <br>
