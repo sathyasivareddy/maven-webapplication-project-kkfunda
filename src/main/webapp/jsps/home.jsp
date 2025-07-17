@@ -9,8 +9,7 @@
 </head>
 </head>
 <body>
-<h1 align="center">Welcome to declerative pipeline with triggers git push with dynamic brach
-</h1>
+<h1 align="center">Welcome to declerative pipeline with triggers git push with dynamic </h1>
 <h1 align="center"> KK FUNDA</h1>
 <hr>
 <br>
