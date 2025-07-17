@@ -5,24 +5,16 @@ pipeline {
       maven "maven-3.9.9"
    }
 parameters {
-        gitParameter(
-            name: 'TARGET_BRANCH',
-            type: 'PT_BRANCH',
-            branchFilter: '/(.*)', // Filter all remote branches
-            defaultValue: 'development',        // Default branch
-            description: 'development branch to build',
-            sortMode: 'DESCENDING',      // Sort branches by recently updated
-            useRepository: 'https://github.com/sathyasivareddy/maven-webapplication-project-kkfunda/' // Your repo URL
-        )
-        
-        // Optional: Add other parameters
-        choice(
-            name: 'BUILD_TYPE',
-            choices: ['debug', 'release'],
-            description: 'development branch '
-        )
-    }
-
+    gitParameter(
+        name: 'SELECTED_BRANCH',
+        type: 'PT_BRANCH',
+        branchFilter: 'origin/(.*)',
+        defaultValue: 'origin/development',
+        description: 'Select branch to build',
+        sortMode: 'DESCENDING',
+        useRepository: 'https://github.com/sathyasivareddy/maven-webapplication-project-kkfunda.git'
+    )
+}
    
 triggers {
    //pollSCM('* * * * *')
@@ -32,22 +24,28 @@ triggers {
       
    stages{
       stage('git checkout') {
-         steps {
-            script {
-               // Clean branch name by removing 'origin/' if present
-               def branchName = params.SELECTED_BRANCH.replaceFirst()
-               
-               checkout([
-                  $class: 'GitSCM',
-                  branches: [[name: branchName]],
-                  userRemoteConfigs: [[
-                     url: 'https://github.com/sathyasivareddy/maven-webapplication-project-kkfunda/',
-                     //credentialsId: 'your-github-credentials' // Add your credentials ID here
-                  ]]
-               ])
-            }
-         }
-      }
+    steps {
+        script {
+            // Safely handle branch name with proper cleaning
+            def branchName = params.SELECTED_BRANCH.replaceAll('origin/', '')
+            
+            checkout([
+                $class: 'GitSCM',
+                branches: [[name: branchName]],
+                userRemoteConfigs: [[
+                    url: 'https://github.com/sathyasivareddy/maven-webapplication-project-kkfunda.git',
+                    credentialsId: 'github-credentials'
+                ]],
+                extensions: [
+                    [
+                        $class: 'LocalBranch',
+                        localBranch: branchName
+                    ]
+                ]
+            ])
+        }
+    }
+}
       stage('BUILD') {
          steps{
             sh "mvn clean package"
