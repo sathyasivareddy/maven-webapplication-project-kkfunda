@@ -44,15 +44,17 @@ pipeline {
                 """
             }
         }
-        {
+        
             stage('idea QA up stream tigger')
-            {
+            { 
+                steps
+                {
                 build job: 'idea-qa'
             }
             
         }
         
-    }
+    
     
         post {
         success {
