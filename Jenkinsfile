@@ -47,7 +47,7 @@ pipeline {
         
         stage('idea QA up stream tigger') { 
             steps {
-                build job: 'idea-qa'
+                build job: 'idea-declarative-pl-qa'
             }
         }
     }
