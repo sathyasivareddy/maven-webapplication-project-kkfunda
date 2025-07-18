@@ -45,24 +45,19 @@ pipeline {
             }
         }
         
-            stage('idea QA up stream tigger')
-            { 
-                steps
-                {
+        stage('idea QA up stream tigger') { 
+            steps {
                 build job: 'idea-qa'
             }
-            
         }
-        
+    }
     
-    
-        post {
+    post {
         success {
             script {
                 notifyBuild(currentBuild.result)
             }
         }
-
         failure {
             script {
                 notifyBuild(currentBuild.result)
@@ -74,11 +69,10 @@ pipeline {
 // Notification method
 def notifyBuild(String buildStatus = 'STARTED') {
     buildStatus = buildStatus ?: 'SUCCESS'
-
     def colorCode
     def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
     def summary = "${subject} (${env.BUILD_URL})"
-
+    
     switch (buildStatus) {
         case 'STARTED':
             colorCode = '#FFFF00' // Yellow
@@ -89,6 +83,6 @@ def notifyBuild(String buildStatus = 'STARTED') {
         default:
             colorCode = '#FF0000' // Red
     }
-
+    
     slackSend(color: colorCode, message: summary)
 }
