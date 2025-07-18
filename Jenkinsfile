@@ -7,7 +7,7 @@ pipeline {
     
     triggers {
         // pollSCM('* * * * *')  // Correct cron syntax if needed
-        githubPush()
+       // githubPush()
     }
     
     stages {
